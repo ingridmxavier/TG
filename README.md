@@ -5,4 +5,4 @@
 👁️‍🗨️ O projeto utiliza Visão Computacional e Deep Learning para identificar o celular em tempo real, com foco em 🔒 privacidade e 🛣️ segurança viária.
 
 
-Link do site: https://ingridmxavier.github.io/TCC/
+Link do site: https://ingridmxavier.github.io/TG/
