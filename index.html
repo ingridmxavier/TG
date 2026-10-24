@@ -3,44 +3,189 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DriveSafe Vision — Detecção de Uso de Celular ao Volante</title>
+<title>DriveSafe Vision — Detecção Embarcada de Uso de Celular ao Volante</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
+    :root {
+        --bg-page: #f8fafc;
+        --bg-card: #ffffff;
+        --bg-subtle: #f1f5f9;
+        --navy-950: #090d16;
+        --navy-900: #0f172a;
+        --navy-800: #1e293b;
+        --brand-700: #1d4ed8;
+        --brand-600: #2563eb;
+        --brand-500: #3b82f6;
+        --brand-100: #dbeafe;
+        --brand-50: #eff6ff;
+        --emerald-600: #059669;
+        --emerald-100: #d1fae5;
+        --emerald-50: #ecfdf5;
+        --amber-600: #d97706;
+        --amber-100: #fef3c7;
+        --amber-50: #fffbeb;
+        --text-main: #0f172a;
+        --text-body: #334155;
+        --text-muted: #64748b;
+        --border-color: #e2e8f0;
+        --radius-lg: 16px;
+        --radius-md: 12px;
+        --radius-sm: 8px;
+        --shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.05), 0 1px 2px rgba(15, 23, 42, 0.03);
+        --shadow-md: 0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -1px rgba(15, 23, 42, 0.04);
+        --shadow-lg: 0 12px 32px -4px rgba(15, 23, 42, 0.10);
+    }
+
     * {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
     }
 
+    html {
+        scroll-behavior: smooth;
+    }
+
     body {
-        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        line-height: 1.7;
-        color: #1a1a2e;
-        background: #f7f8fa;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.65;
+        color: var(--text-body);
+        background-color: var(--bg-page);
+        -webkit-font-smoothing: antialiased;
     }
 
-    header {
-        background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
-        color: #ffffff;
-        padding: 60px 20px;
-        text-align: center;
+    code {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.86em;
+        background: var(--bg-subtle);
+        color: var(--brand-700);
+        padding: 2px 7px;
+        border-radius: 5px;
+        border: 1px solid var(--border-color);
     }
 
-    header .icon {
-        font-size: 48px;
-        margin-bottom: 10px;
+    /* ===== TOP NAVIGATION ===== */
+    .navbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(15, 23, 42, 0.88);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    header h1 {
-        font-size: 2.4rem;
-        margin-bottom: 10px;
-        letter-spacing: -0.5px;
-    }
-
-    header p.subtitle {
-        font-size: 1.1rem;
-        opacity: 0.85;
-        max-width: 700px;
+    .nav-container {
+        max-width: 1080px;
         margin: 0 auto;
+        padding: 12px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+    }
+
+    .nav-brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 1rem;
+        text-decoration: none;
+        letter-spacing: -0.3px;
+    }
+
+    .nav-brand span.dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 8px #22c55e;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 20px;
+        list-style: none;
+        margin: 0;
+        flex-wrap: wrap;
+    }
+
+    .nav-links a {
+        color: #cbd5e1;
+        text-decoration: none;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+
+    .nav-links a:hover {
+        color: #ffffff;
+    }
+
+    /* ===== HERO HEADER ===== */
+    header.hero {
+        position: relative;
+        background: radial-gradient(circle at 20% 20%, #1e3a8a 0%, #0f172a 55%, #090d16 100%);
+        color: #ffffff;
+        padding: 76px 24px 68px;
+        text-align: center;
+        overflow: hidden;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    header.hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+        background-size: 28px 28px;
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .hero-inner {
+        position: relative;
+        max-width: 840px;
+        margin: 0 auto;
+    }
+
+    .hero-kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(59, 130, 246, 0.18);
+        border: 1px solid rgba(96, 165, 250, 0.35);
+        color: #93c5fd;
+        padding: 6px 16px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        letter-spacing: 0.3px;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+    }
+
+    header.hero h1 {
+        font-size: clamp(2.2rem, 4.5vw, 3.2rem);
+        font-weight: 800;
+        letter-spacing: -1px;
+        line-height: 1.15;
+        margin-bottom: 16px;
+        background: linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    header.hero p.subtitle {
+        font-size: 1.12rem;
+        color: #cbd5e1;
+        max-width: 680px;
+        margin: 0 auto 28px;
+        font-weight: 400;
     }
 
     .badges {
@@ -48,486 +193,831 @@
         justify-content: center;
         gap: 10px;
         flex-wrap: wrap;
-        margin-top: 20px;
     }
 
     .badge {
-        background: rgba(255,255,255,0.15);
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 0.85rem;
-        border: 1px solid rgba(255,255,255,0.3);
+        background: rgba(255, 255, 255, 0.08);
+        color: #e2e8f0;
+        padding: 7px 15px;
+        border-radius: 999px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        backdrop-filter: blur(4px);
     }
 
+    /* ===== MAIN CONTAINER ===== */
     main {
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 50px 20px;
+        max-width: 1080px;
+        margin: -32px auto 0;
+        padding: 0 24px 64px;
+        position: relative;
+        z-index: 2;
     }
 
     section {
-        background: #ffffff;
-        border-radius: 12px;
-        padding: 32px;
+        background: var(--bg-card);
+        border-radius: var(--radius-lg);
+        padding: 36px 40px;
+        margin-bottom: 28px;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-color);
+    }
+
+    .section-header {
         margin-bottom: 24px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        border: 1px solid #e5e7eb;
+    }
+
+    .section-eyebrow {
+        display: block;
+        font-size: 0.76rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: var(--brand-600);
+        margin-bottom: 4px;
     }
 
     section h2 {
-        color: #0f172a;
-        font-size: 1.4rem;
-        margin-bottom: 16px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #3b82f6;
-        display: inline-block;
+        color: var(--text-main);
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: -0.4px;
     }
 
     section p {
-        margin-bottom: 12px;
-        color: #374151;
+        margin-bottom: 14px;
+        color: var(--text-body);
     }
 
-    .grid {
+    section p:last-child {
+        margin-bottom: 0;
+    }
+
+    /* ===== KPI STATS BANNER ===== */
+    .stat-row {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-        gap: 16px;
-        margin-top: 16px;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        margin-bottom: 28px;
     }
 
-    .card {
-        background: #f0f4f8;
-        border-radius: 8px;
-        padding: 18px;
-        border-left: 4px solid #3b82f6;
+    .stat {
+        background: var(--bg-card);
+        border-radius: var(--radius-md);
+        padding: 24px 20px;
+        text-align: center;
+        box-shadow: var(--shadow-md);
+        border: 1px solid var(--border-color);
+        border-top: 4px solid var(--brand-600);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .card h3 {
-        font-size: 1rem;
-        color: #1e3a5f;
-        margin-bottom: 6px;
+    .stat:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
     }
 
-    .card p {
-        font-size: 0.9rem;
-        color: #4b5563;
-        margin: 0;
+    .stat.emerald {
+        border-top-color: var(--emerald-600);
     }
 
-    /* ===== PIPELINE — corrigido para ficar tudo em uma linha ===== */
-    .pipeline {
+    .stat .number {
+        font-size: 2.1rem;
+        font-weight: 800;
+        color: var(--navy-900);
+        letter-spacing: -0.8px;
+        line-height: 1.1;
+    }
+
+    .stat.emerald .number {
+        color: var(--emerald-600);
+    }
+
+    .stat .label {
+        font-size: 0.84rem;
+        font-weight: 600;
+        color: var(--text-main);
+        margin-top: 8px;
+    }
+
+    .stat .sublabel {
+        font-size: 0.76rem;
+        color: var(--text-muted);
+        margin-top: 2px;
+    }
+
+    /* ===== STORYTELLING GRID (4 STEPS) ===== */
+    .story-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .story-card {
+        background: var(--bg-page);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        padding: 24px;
+        position: relative;
+        transition: border-color 0.2s ease;
+    }
+
+    .story-card:hover {
+        border-color: #cbd5e1;
+    }
+
+    .story-step-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        background: var(--brand-100);
+        color: var(--brand-700);
+        margin-bottom: 10px;
+    }
+
+    .story-card h3 {
+        color: var(--text-main);
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+
+    .story-card p {
+        font-size: 0.94rem;
+        margin-bottom: 10px;
+    }
+
+    /* ===== MEDIA SHOWCASE ===== */
+    .media-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+        margin-top: 28px;
+        padding-top: 28px;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .media-card {
+        display: flex;
+        flex-direction: column;
+        background: var(--bg-page);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
+        overflow: hidden;
+    }
+
+    .media-frame {
+        background: #090d16;
+        aspect-ratio: 16 / 10;
         display: flex;
         align-items: center;
-        justify-content: flex-start;
-        gap: 8px;
+        justify-content: center;
+        overflow: hidden;
+    }
+
+    .media-frame img,
+    .media-frame video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .media-caption {
+        padding: 12px 16px;
+        font-size: 0.84rem;
+        color: var(--text-muted);
+        font-weight: 500;
+        background: var(--bg-card);
+        border-top: 1px solid var(--border-color);
+    }
+
+    /* ===== PIPELINE FLOW ===== */
+    .pipeline {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+        align-items: stretch;
+        gap: 10px;
         margin: 24px 0;
-        overflow-x: auto;
-        padding-bottom: 10px;
-        flex-wrap: nowrap;
     }
 
     .pipeline .step {
-        background: #1e3a5f;
-        color: white;
-        padding: 12px 16px;
-        border-radius: 8px;
-        font-size: 0.85rem;
+        background: linear-gradient(145deg, #0f172a 0%, #1e3a5f 100%);
+        color: #ffffff;
+        padding: 18px 14px;
+        border-radius: var(--radius-md);
         text-align: center;
-        flex-shrink: 0;
-        white-space: nowrap;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        box-shadow: var(--shadow-sm);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .pipeline .step-num {
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        color: #93c5fd;
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    .pipeline .step-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 4px;
+    }
+
+    .pipeline .step-desc {
+        font-size: 0.78rem;
+        color: #cbd5e1;
+        line-height: 1.35;
     }
 
     .pipeline .arrow {
-        color: #3b82f6;
-        font-size: 1.4rem;
-        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--brand-600);
+        font-size: 1.35rem;
+        font-weight: 700;
     }
 
-    /* Scrollbar mais discreta */
-    .pipeline::-webkit-scrollbar {
-        height: 6px;
+    .highlight-box {
+        background: var(--amber-50);
+        border: 1px solid #fde68a;
+        border-left: 4px solid var(--amber-600);
+        padding: 16px 20px;
+        border-radius: var(--radius-sm);
+        margin-top: 18px;
+        font-size: 0.93rem;
+        color: #78350f;
     }
-    .pipeline::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 10px;
+
+    /* ===== MODELS CARDS GRID ===== */
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 18px;
+        margin-top: 18px;
     }
-    /* ============================================================ */
+
+    .card {
+        background: var(--bg-page);
+        border-radius: var(--radius-md);
+        padding: 20px;
+        border: 1px solid var(--border-color);
+        border-left: 4px solid #94a3b8;
+        transition: transform 0.15s ease;
+    }
+
+    .card.selected {
+        background: var(--brand-50);
+        border-color: #bfdbfe;
+        border-left: 4px solid var(--brand-600);
+    }
+
+    .card-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .card h3 {
+        font-size: 1.02rem;
+        color: var(--text-main);
+        font-weight: 700;
+    }
+
+    .pill-chosen {
+        font-size: 0.72rem;
+        font-weight: 700;
+        background: var(--emerald-100);
+        color: var(--emerald-600);
+        padding: 3px 9px;
+        border-radius: 999px;
+        white-space: nowrap;
+    }
+
+    .card p {
+        font-size: 0.88rem;
+        color: var(--text-body);
+        margin: 0;
+    }
+
+    /* ===== TABLE ===== */
+    .table-wrapper {
+        overflow-x: auto;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-color);
+        margin-top: 16px;
+    }
 
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 16px;
         font-size: 0.92rem;
     }
 
     th, td {
         text-align: left;
-        padding: 10px 12px;
-        border-bottom: 1px solid #e5e7eb;
+        padding: 13px 16px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    tr:last-child td {
+        border-bottom: none;
     }
 
     th {
-        background: #1e3a5f;
-        color: white;
+        background: var(--navy-900);
+        color: #ffffff;
         font-weight: 600;
+        font-size: 0.84rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 
-    tr:nth-child(even) {
-        background: #f7f8fa;
+    td:first-child {
+        font-weight: 600;
+        color: var(--text-main);
+        width: 28%;
+        background: var(--bg-page);
     }
 
-    .stat-row {
+    /* ===== TWO-COLUMN SECTIONS ===== */
+    .two-col {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+    }
+
+    .feature-list {
+        list-style: none;
+        margin: 16px 0 0;
+    }
+
+    .feature-list li {
+        position: relative;
+        padding-left: 28px;
+        margin-bottom: 12px;
+        font-size: 0.94rem;
+        color: var(--text-body);
+    }
+
+    .feature-list li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        top: 1px;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: var(--brand-100);
+        color: var(--brand-700);
+        font-size: 0.75rem;
+        font-weight: 800;
         display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .feature-list.future li::before {
+        content: "→";
+        background: var(--bg-subtle);
+        color: var(--navy-800);
+    }
+
+    /* ===== TECH STACK TAGS ===== */
+    .tech-groups {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 18px;
         margin-top: 16px;
     }
 
-    .stat {
-        flex: 1;
-        min-width: 140px;
-        background: #eff6ff;
-        border-radius: 8px;
+    .tech-group {
+        background: var(--bg-page);
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-md);
         padding: 18px;
-        text-align: center;
     }
 
-    .stat .number {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #1e3a5f;
-    }
-
-    .stat .label {
-        font-size: 0.82rem;
-        color: #6b7280;
-        margin-top: 4px;
+    .tech-group h4 {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--text-muted);
+        margin-bottom: 12px;
     }
 
     .tech-list {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
-        margin-top: 12px;
     }
 
     .tech-tag {
-        background: #dbeafe;
-        color: #1e3a5f;
-        padding: 5px 12px;
-        border-radius: 6px;
-        font-size: 0.85rem;
-        font-weight: 500;
+        background: var(--bg-card);
+        color: var(--navy-800);
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 0.84rem;
+        font-weight: 600;
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
     }
 
-    ul {
-        margin-left: 20px;
-        color: #374151;
-    }
-
-    ul li {
-        margin-bottom: 8px;
-    }
-
+    /* ===== FOOTER ===== */
     footer {
+        background: var(--navy-900);
+        color: #94a3b8;
         text-align: center;
-        padding: 30px 20px;
-        color: #6b7280;
-        font-size: 0.85rem;
+        padding: 40px 24px;
+        font-size: 0.88rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .highlight-box {
-        background: #fef3c7;
-        border-left: 4px solid #f59e0b;
-        padding: 14px 18px;
-        border-radius: 6px;
-        margin-top: 16px;
-        font-size: 0.92rem;
+    footer strong {
+        color: #ffffff;
     }
 
-    .story-intro {
-        background: #eff6ff;
-        border-left: 4px solid #3b82f6;
-        padding: 16px 20px;
-        border-radius: 6px;
-        margin-bottom: 20px;
-        font-style: italic;
-        color: #1e3a5f;
-        font-size: 0.95rem;
-    }
-
-    .story-block h3 {
-        color: #1e3a5f;
-        font-size: 1.05rem;
-        margin-top: 18px;
-        margin-bottom: 8px;
-    }
-
-    .video-wrapper {
-        margin-top: 20px;
-        border-radius: 8px;
-        overflow: hidden;
-        background: #000;
-    }
-
-    .video-wrapper video {
-        width: 100%;
-        display: block;
-        border-radius: 8px;
-    }
-
-    .video-caption {
-        margin-top: 8px;
-        font-size: 0.85rem;
-        color: #6b7280;
-        text-align: center;
-    }
-
-    .evidence-image {
-        margin-top: 20px;
-        border-radius: 8px;
-        overflow: hidden;
-    }
-
-    .evidence-image img {
-        width: 100%;
-        display: block;
-        border-radius: 8px;
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 860px) {
+        .stat-row {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        .story-grid,
+        .media-grid,
+        .two-col {
+            grid-template-columns: 1fr;
+        }
+        .pipeline {
+            grid-template-columns: 1fr;
+        }
+        .pipeline .arrow {
+            transform: rotate(90deg);
+            padding: 2px 0;
+        }
+        section {
+            padding: 26px 22px;
+        }
+        .nav-links {
+            display: none;
+        }
     }
 </style>
 </head>
 <body>
 
-<header>
-    <div class="icon">🚗📱</div>
-    <h1>DriveSafe Vision</h1>
-    <p class="subtitle">Sistema de detecção em tempo real de uso de celular ao volante, com alertas automáticos via Telegram, embarcado em Raspberry Pi 4.</p>
-    <div class="badges">
-        <span class="badge">Trabalho de Graduação — Engenharia de Informação</span>
-        <span class="badge">UFABC</span>
-        <span class="badge">Visão Computacional</span>
-        <span class="badge">Deep Learning</span>
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="#" class="nav-brand">
+            <span class="dot"></span>
+            DriveSafe Vision
+        </a>
+        <ul class="nav-links">
+            <li><a href="#trajetoria">Trajetória</a></li>
+            <li><a href="#arquitetura">Pipeline</a></li>
+            <li><a href="#modelos">Modelos</a></li>
+            <li><a href="#hardware">Hardware &amp; Telegram</a></li>
+            <li><a href="#tecnologias">Stack</a></li>
+        </ul>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="hero-inner">
+        <div class="hero-kicker">🚗📱 Edge AI &bull; Sistemas Embarcados &bull; Segurança Viária</div>
+        <h1>DriveSafe Vision</h1>
+        <p class="subtitle">
+            Sistema embarcado de visão computacional e aprendizado profundo para detecção em tempo real de uso de celular ao volante, com alertas fotográficos automáticos via Telegram em Raspberry Pi 4.
+        </p>
+        <div class="badges">
+            <span class="badge">Trabalho de Graduação — Engenharia de Informação</span>
+            <span class="badge">UFABC</span>
+            <span class="badge">YOLOv8 ONNX + MobileNetV2 TFLite</span>
+            <span class="badge">Raspberry Pi 4 (ARM64)</span>
+        </div>
     </div>
 </header>
 
 <main>
 
-    <section class="story-block">
-
-        <h3>O desafio</h3>
-        <p>
-            Todo ano, milhares de acidentes de trânsito no Brasil têm o celular ao volante como fator.
-            Como Trabalho de Graduação na UFABC, decidi não ficar só na
-            teoria: construí um sistema que detecta esse comportamento em tempo real, rodando em hardware
-            embarcado de baixo custo.
-        </p>
-
-        <h3>O obstáculo técnico</h3>
-        <p>
-            O modelo inicial (MobileNetV2) tinha recall instável — errava justamente os casos que mais
-            importavam, os positivos reais. Rastreei o problema até um bug de pré-processamento: eu
-            normalizava as imagens dividindo por 255, quando o modelo esperava a função
-            <code>preprocess_input()</code> específica da arquitetura. Um detalhe que a maioria ignoraria —
-            mas que fazia a diferença entre um sistema confiável e um inútil na prática.
-        </p>
-        <p>Corrigi, e o recall saltou para 90–97%.</p>
-
-        <h3>Levando pro mundo real</h3>
-        <p>
-            Não bastava funcionar no papel. Construí um pipeline de duas etapas — YOLOv8 pra detectar a
-            pessoa e a região de interesse, MobileNetV2 pra classificar o comportamento — eliminando falsos
-            positivos que um modelo único gerava sozinho.
-        </p>
-        <p>
-            Pra rodar em tempo real num Raspberry Pi 4, converti os modelos pra TFLite e ONNX. Resultado:
-            6,7x mais rápido que a versão original (11ms vs 78ms por frame) — a diferença entre um alerta
-            em tempo útil e um alerta tarde demais.
-        </p>
-        <p>
-            Integrei tudo a um bot do Telegram via API REST, que envia alerta automático assim que detecta
-            o comportamento de risco.
-        </p>
-
-        <h3>O resultado</h3>
-        <p>
-            Hoje tenho um sistema funcional, embarcado, testado em dois hardwares diferentes (Raspberry Pi
-            com câmera CSI e PC com webcam), com pipeline de detecção validado e alertas em tempo real —
-            não é só um projeto acadêmico engavetado, é algo que resolve um problema real de segurança.
-        </p>
-
-        <div class="video-wrapper">
-            <img src="Arquivos/fundo.png" alt="DriveSafe Vision em contexto de direção" style="width: 100%; display: block; border-radius: 8px;">
+    <!-- KPI HIGHLIGHTS -->
+    <div class="stat-row">
+        <div class="stat emerald">
+            <div class="number">100%</div>
+            <div class="label">Precisão Operacional</div>
+            <div class="sublabel">Zero falsos positivos nos testes</div>
         </div>
-        <p class="video-caption">Contexto de uso: detecção de celular ao volante durante a condução.</p>
-
-        <div class="video-wrapper" style="margin-top: 16px;">
-            <video controls poster="">
-                <source src="Arquivos/celular.mp4" type="video/mp4">
-                Seu navegador não suporta reprodução de vídeo.
-            </video>
+        <div class="stat">
+            <div class="number">97,8%</div>
+            <div class="label">Acurácia Embarcada</div>
+            <div class="sublabel">Câmera CSI Raspberry Pi 4</div>
         </div>
-        <p class="video-caption">Demonstração em tempo real: detecção pelo DriveSafe Vision e alerta chegando no Telegram.</p>
+        <div class="stat">
+            <div class="number">95,4%</div>
+            <div class="label">Acurácia em Bancada</div>
+            <div class="sublabel">Webcam Computador (&gt;90% Recall)</div>
+        </div>
+        <div class="stat">
+            <div class="number">6,3&times;</div>
+            <div class="label">Ganho de Velocidade</div>
+            <div class="sublabel">TFLite (9,9 ms) vs. Keras (62,9 ms)</div>
+        </div>
+    </div>
+
+    <!-- STORYTELLING & DEMO -->
+    <section id="trajetoria">
+        <div class="section-header">
+            <span class="section-eyebrow">Da Teoria à Prática Embarcada</span>
+            <h2>Engenharia por Trás do Projeto</h2>
+        </div>
+
+        <p>
+            O <strong>DriveSafe Vision</strong> nasceu com o propósito de combater uma das maiores causas de sinistros graves no trânsito: a distração visual, manual e cognitiva provocada pelo uso do telefone celular durante a condução veicular.
+        </p>
+
+        <div class="story-grid">
+            <div class="story-card">
+                <span class="story-step-badge">01 &bull; O Desafio</span>
+                <h3>Sair da teoria para o hardware real</h3>
+                <p>
+                    Todo ano, milhares de acidentes de trânsito no Brasil têm o celular ao volante como fator determinante. Como Trabalho de Graduação na UFABC, o objetivo foi construir um sistema completo capaz de detectar esse comportamento em tempo real rodando diretamente em hardware embarcado de baixo custo.
+                </p>
+            </div>
+
+            <div class="story-card">
+                <span class="story-step-badge">02 &bull; O Obstáculo Técnico</span>
+                <h3>Diagnóstico matemático de pré-processamento</h3>
+                <p>
+                    Nos primeiros testes em vídeo, a MobileNetV2 apresentava <em>recall</em> instável nos positivos reais. O perfilamento revelou a causa raiz: a normalização dividia os pixels por <code>255.0</code> (escala <code>[0, 1]</code>), enquanto a arquitetura exigia simetria em <code>[-1, 1]</code> via <code>preprocess_input()</code>. Corrigido esse alinhamento e calibrado o limiar, o <em>recall</em> saltou para <strong>90–97%</strong>.
+                </p>
+            </div>
+
+            <div class="story-card">
+                <span class="story-step-badge">03 &bull; Levando para o Mundo Real</span>
+                <h3>Arquitetura híbrida e aceleração em borda</h3>
+                <p>
+                    Para eliminar alarmes falsos causados por garrafas ou objetos próximos ao rosto, estruturou-se um pipeline em dois estágios: <strong>YOLOv8n</strong> para localizar o aparelho celular e <strong>MobileNetV2</strong> para confirmar o uso ao volante. A conversão para <strong>ONNX</strong> e <strong>TFLite</strong> acelerou a inferência em mais de 6&times;, viabilizando alertas em tempo útil no Raspberry Pi 4.
+                </p>
+            </div>
+
+            <div class="story-card">
+                <span class="story-step-badge">04 &bull; O Resultado</span>
+                <h3>Solução autônoma de ponta a ponta</h3>
+                <p>
+                    O resultado é um protótipo funcional, validado de forma cruzada em dois sensores ópticos distintos (Raspberry Pi 4 com câmera CSI OV5647 e PC com webcam), integrado via API REST ao <strong>Telegram</strong> para envio imediato de evidências visuais comprimidas em memória RAM sem gravação contínua de vídeo.
+                </p>
+            </div>
+        </div>
+
+        <div class="media-grid">
+            <div class="media-card">
+                <div class="media-frame">
+                    <img src="Arquivos/fundo.png" alt="DriveSafe Vision em contexto de direção">
+                </div>
+                <div class="media-caption">
+                    📷 <strong>Contexto operacional:</strong> monitoramento da cabine e detecção de uso de celular durante a condução.
+                </div>
+            </div>
+
+            <div class="media-card">
+                <div class="media-frame">
+                    <video controls preload="metadata">
+                        <source src="Arquivos/celular.mp4" type="video/mp4">
+                        Seu navegador não suporta reprodução de vídeo.
+                    </video>
+                </div>
+                <div class="media-caption">
+                    🎬 <strong>Demonstração em tempo real:</strong> detecção pelo DriveSafe Vision e alerta instantâneo chegando no Telegram.
+                </div>
+            </div>
+        </div>
     </section>
 
-    <section>
-        <h2>Sobre o Projeto</h2>
+    <!-- PIPELINE -->
+    <section id="arquitetura">
+        <div class="section-header">
+            <span class="section-eyebrow">Fluxo Operacional em Cascata</span>
+            <h2>Pipeline de Detecção em Dois Estágios</h2>
+        </div>
         <p>
-            O <strong>DriveSafe Vision</strong> é um sistema de monitoramento que detecta, em tempo real,
-            o uso de celular por motoristas durante a condução, com o objetivo de contribuir para a
-            redução de acidentes de trânsito causados por distração. O sistema combina duas redes
-            neurais em uma arquitetura de dois estágios e envia alertas automáticos via Telegram
-            sempre que o uso contínuo do celular é confirmado.
+            O sistema opera como um filtro seletivo em cascata acoplado a uma máquina de estados temporal, eliminando falsos positivos provocados por objetos de formato semelhante ao de um smartphone:
         </p>
-        <p>
-            O protótipo foi desenvolvido e validado tanto em um computador convencional (com webcam)
-            quanto em um dispositivo embarcado de baixo custo — o Raspberry Pi 4 — demonstrando a
-            viabilidade da solução em hardware com recursos computacionais limitados.
-        </p>
-    </section>
 
-    <section>
-        <h2>Pipeline de Detecção</h2>
-        <p>O sistema utiliza uma abordagem de detecção em dois estágios, eliminando falsos positivos causados por objetos com formato semelhante ao de um celular:</p>
         <div class="pipeline">
-            <div class="step">📷 Captura do Frame</div>
-            <span class="arrow">→</span>
-            <div class="step">YOLOv8<br>Detecta celular na cena</div>
-            <span class="arrow">→</span>
-            <div class="step">MobileNetV2<br>Confirma uso ao volante</div>
-            <span class="arrow">→</span>
-            <div class="step">📲 Alerta via Telegram</div>
+            <div class="step">
+                <span class="step-num">Etapa 1</span>
+                <div class="step-title">📷 Captura &amp; OpenCV</div>
+                <div class="step-desc">Quadro 640&times;480 px, conversão BGR&rarr;RGB e normalização</div>
+            </div>
+            <span class="arrow">&rarr;</span>
+            <div class="step">
+                <span class="step-num">1º Estágio</span>
+                <div class="step-title">🎯 YOLOv8n (ONNX)</div>
+                <div class="step-desc">Localiza celular na cena (classe 67 COCO)</div>
+            </div>
+            <span class="arrow">&rarr;</span>
+            <div class="step">
+                <span class="step-num">2º Estágio</span>
+                <div class="step-title">🧠 MobileNetV2 (TFLite)</div>
+                <div class="step-desc">Valida postura e confirma uso ao volante</div>
+            </div>
+            <span class="arrow">&rarr;</span>
+            <div class="step">
+                <span class="step-num">Notificação</span>
+                <div class="step-title">📲 Alerta Telegram</div>
+                <div class="step-desc">Persistência &ge; 2s, JPEG em RAM e cooldown de 30s</div>
+            </div>
         </div>
+
         <div class="highlight-box">
-            O frame só é classificado como <em>uso de celular</em> quando os <strong>dois</strong> modelos concordam:
-            o YOLOv8 confirma a presença física do dispositivo, e o MobileNetV2 confirma o contexto de uso ao volante.
+            <strong>Decisão Conjunta e Persistência:</strong> O alerta só é disparado quando os <strong>dois modelos</strong> concordam simultaneamente (o YOLOv8n confirma a presença física do aparelho e a MobileNetV2 confirma o contexto de uso ao volante) por pelo menos <strong>2 segundos contínuos</strong>.
         </div>
     </section>
 
-    <section>
-        <h2>Modelos Avaliados</h2>
-        <p>Oito arquiteturas de <em>deep learning</em> foram comparadas antes da escolha final, divididas em classificadores e detectores de objetos:</p>
-        <div class="grid">
-            <div class="card">
-                <h3>MobileNetV2 ✅ (escolhido)</h3>
-                <p>Classificador leve, 99,30% de acurácia, compatível com TFLite para embarcados.</p>
-            </div>
-            <div class="card">
-                <h3>YOLOv8 ✅ (escolhido)</h3>
-                <p>Detector anchor-free em estágio único, usado como filtro de confirmação de celular.</p>
-            </div>
-            <div class="card">
-                <h3>RetinaNet</h3>
-                <p>Melhor acurácia entre todos (99,65%), mas mais custoso computacionalmente.</p>
-            </div>
-            <div class="card">
-                <h3>ResNet50 / VGG16 / AlexNet</h3>
-                <p>Classificadores clássicos, usados como referência de comparação.</p>
-            </div>
-            <div class="card">
-                <h3>SSD / Faster R-CNN</h3>
-                <p>Detectores adicionais avaliados como referência entre estágio único e dois estágios.</p>
-            </div>
+    <!-- MODELS EVALUATED -->
+    <section id="modelos">
+        <div class="section-header">
+            <span class="section-eyebrow">Estudo Experimental Comparativo</span>
+            <h2>Oito Arquiteturas de Deep Learning Avaliadas</h2>
         </div>
-    </section>
-
-    <section>
-        <h2>Resultados</h2>
-        <div class="stat-row">
-            <div class="stat">
-                <div class="number">95,4%</div>
-                <div class="label">Acurácia (Webcam computador)</div>
-            </div>
-            <div class="stat">
-                <div class="number">97,8%</div>
-                <div class="label">Acurácia (Webcam Raspberry)</div>
-            </div>
-            <div class="stat">
-                <div class="number">100%</div>
-                <div class="label">Precisão</div>
-            </div>
-            <div class="stat">
-                <div class="number">&gt;90%</div>
-                <div class="label">Recall</div>
-            </div>
-        </div>
-        <p style="margin-top: 20px;">
-            A arquitetura de dois estágios eliminou completamente os falsos positivos causados por
-            objetos semelhantes a celulares (garrafas, caixas de óculos), sem necessidade de
-            retreinar o classificador com novas classes negativas.
-        </p>
-    </section>
-
-    <section>
-        <h2>Hardware Embarcado</h2>
-        <table>
-            <tr><th>Componente</th><th>Especificação</th></tr>
-            <tr><td>Processamento</td><td>Raspberry Pi 4 Model B — Broadcom BCM2711, 4 núcleos ARM Cortex-A72 @ 1,8 GHz, 4 GB RAM</td></tr>
-            <tr><td>Câmera</td><td>Módulo CSI 5MP com sensor OV5647, lente infravermelha</td></tr>
-            <tr><td>Resolução de captura</td><td>640×480 px — modo nativo mais rápido do sensor (62,5 FPS)</td></tr>
-            <tr><td>Sistema Operacional</td><td>Raspberry Pi OS (64 bits), baseado em Debian</td></tr>
-            <tr><td>Armazenamento</td><td>Cartão microSD 32 GB</td></tr>
-        </table>
-    </section>
-
-    <section>
-        <h2>Integração com Telegram</h2>
         <p>
-            O sistema envia notificações automáticas em tempo real por meio da API REST do Telegram,
-            transformando o protótipo de um sistema de detecção local em uma solução de
-            monitoramento remoto:
+            Antes da implantação embarcada, oito arquiteturas (quatro classificadores de imagem e quatro detectores de objetos) foram treinadas e comparadas por até 80 épocas sobre 5.726 imagens balanceadas:
         </p>
-        <ul>
-            <li><strong>Início do sistema:</strong> mensagem de texto confirmando a ativação</li>
-            <li><strong>Alerta de detecção:</strong> foto do momento + tempo de uso contínuo, disparado após 2 segundos de detecção confirmada</li>
-            <li><strong>Cooldown de 30s:</strong> evita spam de notificações repetidas</li>
-            <li><strong>Encerramento:</strong> confirmação de que o sistema foi desativado</li>
-        </ul>
-    </section>
 
-    <section>
-        <h2>Stack Tecnológica</h2>
-        <div class="tech-list">
-            <span class="tech-tag">Python</span>
-            <span class="tech-tag">TensorFlow / Keras</span>
-            <span class="tech-tag">TensorFlow Lite</span>
-            <span class="tech-tag">ONNX Runtime</span>
-            <span class="tech-tag">OpenCV</span>
-            <span class="tech-tag">YOLOv8 (Ultralytics)</span>
-            <span class="tech-tag">MobileNetV2</span>
-            <span class="tech-tag">Picamera2</span>
-            <span class="tech-tag">Telegram Bot API</span>
-            <span class="tech-tag">Pandas</span>
-            <span class="tech-tag">Raspberry Pi 4</span>
+        <div class="grid">
+            <div class="card selected">
+                <div class="card-header">
+                    <h3>MobileNetV2</h3>
+                    <span class="pill-chosen">✓ 2º Estágio</span>
+                </div>
+                <p>Classificador leve (~3,4M parâmetros) com blocos residuais invertidos. Atingiu <strong>99,30% de acurácia e F1-Score</strong> com conversão direta para TFLite.</p>
+            </div>
+
+            <div class="card selected">
+                <div class="card-header">
+                    <h3>YOLOv8n</h3>
+                    <span class="pill-chosen">✓ 1º Estágio</span>
+                </div>
+                <p>Detector <em>anchor-free</em> em estágio único (~3,2M parâmetros). Rede mais veloz do estudo em CPU, exportada para <strong>ONNX Runtime</strong> como filtro espacial.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>RetinaNet</h3>
+                </div>
+                <p>Detector com pirâmide FPN e <em>Focal Loss</em>. Obteve a maior acurácia bruta (99,65%), porém com ~36M parâmetros e maior custo em CPU.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>ResNet50</h3>
+                </div>
+                <p>Classificador residual clássico (99,65% de acurácia, ~25M parâmetros), avaliado como referência superior de estabilidade de convergência.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>VGG16 &amp; AlexNet</h3>
+                </div>
+                <p>Classificadores históricos (~138M e ~61M parâmetros), utilizados como <em>baselines</em> para quantificar o ganho de eficiência de memória das redes modernas.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>SSD300 &amp; Faster R-CNN</h3>
+                </div>
+                <p>Detectores de estágio único multiescala e de dois estágios (RPN + RoI Align), avaliados para contrastar custo computacional em CPU.</p>
+            </div>
         </div>
     </section>
 
-    <section>
-        <h2>Desafios Técnicos Superados</h2>
-        <ul>
-            <li>Incompatibilidade entre Python 3.13 e TensorFlow — resolvida com <code>ai-edge-litert</code></li>
-            <li>Correção de bug crítico de pré-processamento (<code>/255.0</code> vs. <code>preprocess_input()</code>), que restaurou o recall do sistema</li>
-            <li>Eliminação de falsos positivos por meio da arquitetura de detecção em dois estágios</li>
-            <li>Padronização da resolução de captura entre plataformas para comparação justa de desempenho</li>
-            <li>Correção da lógica de cooldown de alertas via Telegram</li>
-            <li>Ganho de ~6,7x de velocidade na conversão do modelo Keras para TensorFlow Lite</li>
-        </ul>
+    <!-- HARDWARE & TELEGRAM -->
+    <section id="hardware">
+        <div class="two-col">
+            <div>
+                <div class="section-header">
+                    <span class="section-eyebrow">Plataforma de Borda</span>
+                    <h2>Hardware Embarcado</h2>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <tr><th>Componente</th><th>Especificação Técnica</th></tr>
+                        <tr><td>Placa (SBC)</td><td>Raspberry Pi 4 Model B — SoC Broadcom BCM2711, Quad-Core ARM Cortex-A72 @ 1,8 GHz, 4 GB RAM LPDDR4</td></tr>
+                        <tr><td>Câmera Dedicada</td><td>Módulo CSI 5 MP — Sensor CMOS OmniVision OV5647 (f/1,8, 3,6 mm)</td></tr>
+                        <tr><td>Resolução Nativa</td><td>640&times;480 px (menor modo físico RAW 10 bits do sensor a 62,5 FPS)</td></tr>
+                        <tr><td>Sistema Operacional</td><td>Raspberry Pi OS 64 bits (Debian 12 Bookworm)</td></tr>
+                        <tr><td>Armazenamento</td><td>Cartão microSD 32 GB</td></tr>
+                    </table>
+                </div>
+            </div>
+
+            <div>
+                <div class="section-header">
+                    <span class="section-eyebrow">Comunicação Corporativa</span>
+                    <h2>Integração com Telegram</h2>
+                </div>
+                <p>
+                    O sistema utiliza a API REST oficial do Telegram (HTTPS) para transformar a detecção local em borda em uma ferramenta de gestão remota de frota em tempo real:
+                </p>
+                <ul class="feature-list">
+                    <li><strong>Ativação da sessão:</strong> notificação automática de texto confirmando o início do monitoramento e a conectividade de rede.</li>
+                    <li><strong>Alerta com evidência visual:</strong> envio da fotografia anotada (HUD) comprimida diretamente na memória RAM + tempo de uso contínuo após <strong>2s de persistência</strong>.</li>
+                    <li><strong>Tolerância e Cooldown (30s):</strong> tolera oclusões breves de até 2s e bloqueia reenvios por 30s para evitar sobrecarga de mensagens.</li>
+                    <li><strong>Encerramento seguro:</strong> notificação final ao desligar o sistema e exportação automática de logs auditáveis em CSV.</li>
+                </ul>
+            </div>
+        </div>
     </section>
 
+    <!-- TECH STACK -->
+    <section id="tecnologias">
+        <div class="section-header">
+            <span class="section-eyebrow">Ferramentas &amp; Bibliotecas</span>
+            <h2>Stack Tecnológica</h2>
+        </div>
+        <div class="tech-groups">
+            <div class="tech-group">
+                <h4>Linguagem &amp; Visão Computacional</h4>
+                <div class="tech-list">
+                    <span class="tech-tag">Python 3</span>
+                    <span class="tech-tag">OpenCV (cv2)</span>
+                    <span class="tech-tag">NumPy</span>
+                    <span class="tech-tag">Picamera2 (CSI)</span>
+                </div>
+            </div>
+            <div class="tech-group">
+                <h4>Deep Learning &amp; Inferência em Borda</h4>
+                <div class="tech-list">
+                    <span class="tech-tag">ONNX Runtime</span>
+                    <span class="tech-tag">LiteRT / TensorFlow Lite</span>
+                    <span class="tech-tag">YOLOv8 (Ultralytics)</span>
+                    <span class="tech-tag">MobileNetV2 (Keras/TF)</span>
+                </div>
+            </div>
+            <div class="tech-group">
+                <h4>Hardware, Telemetria &amp; API</h4>
+                <div class="tech-list">
+                    <span class="tech-tag">Raspberry Pi 4</span>
+                    <span class="tech-tag">Telegram Bot API</span>
+                    <span class="tech-tag">Requests (HTTP)</span>
+                    <span class="tech-tag">Pandas (CSV Logs)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CHALLENGES & FUTURE WORK -->
     <section>
-        <h2>Trabalhos Futuros</h2>
-        <ul>
-            <li>Avaliação do sistema em condições noturnas e de baixa iluminação</li>
-            <li>Aplicação de técnicas de <em>Explainable AI</em> (Grad-CAM, SHAP) para interpretar as decisões do modelo</li>
-            <li>Investigação aprofundada do gargalo de desempenho entre plataformas de execução</li>
-            <li>Refinamento do cálculo de métricas de FPS efetivo</li>
-        </ul>
+        <div class="two-col">
+            <div>
+                <div class="section-header">
+                    <span class="section-eyebrow">Engenharia Aplicada</span>
+                    <h2>Desafios Técnicos Superados</h2>
+                </div>
+                <ul class="feature-list">
+                    <li>Resolução de incompatibilidade do TensorFlow no Python 3.13 (ARM64) utilizando motores leves (<code>ai-edge-litert</code> e <code>onnxruntime</code>).</li>
+                    <li>Diagnóstico e correção da normalização radiométrica (<code>/255.0</code> vs. <code>[-1, 1]</code>), restaurando o <em>recall</em> em vídeo real.</li>
+                    <li>Eliminação total de falsos positivos por meio da validação cruzada entre YOLOv8n e MobileNetV2.</li>
+                    <li>Padronização física da resolução de captura (<code>640&times;480</code>) entre webcam e sensor OV5647 para comparação justa de FPS.</li>
+                    <li>Aceleração de ~6,3&times; na latência de inferência com zero perda de precisão numérica (<code>float32</code>).</li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="section-header">
+                    <span class="section-eyebrow">Próximos Passos</span>
+                    <h2>Trabalhos Futuros</h2>
+                </div>
+                <ul class="feature-list future">
+                    <li>Incorporação de iluminação infravermelha ativa (LEDs IR 850/940 nm) para operação em cabines totalmente escuras à noite.</li>
+                    <li>Aplicação de técnicas de <em>Explainable AI</em> (Grad-CAM, Grad-CAM++, SHAP e LIME) para auditoria visual das ativações.</li>
+                    <li>Recorte dinâmico da Região de Interesse (ROI) entre os estágios e avaliação do YOLOv8 em <code>320&times;320</code> sem interface gráfica.</li>
+                    <li>Integração com telemetria veicular via barramento CAN / OBD-II para condicionar alertas à velocidade do veículo.</li>
+                </ul>
+            </div>
+        </div>
     </section>
 
 </main>
 
 <footer>
-    DriveSafe Vision — Trabalho de Graduação em Engenharia de Informação<br>
-    Universidade Federal do ABC (UFABC)
+    <strong>DriveSafe Vision</strong> — Trabalho de Graduação em Engenharia de Informação<br>
+    Autora: Ingrid Mara Xavier &bull; Universidade Federal do ABC (UFABC) &bull; 2026
 </footer>
 
 </body>
