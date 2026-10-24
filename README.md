@@ -104,22 +104,6 @@ Avaliação sobre **908 imagens reais anotadas manualmente** (`ImgWC` com 457 qu
 
 ---
 
-## ▶️ Como Executar
-
-### Execução Embarcada no Raspberry Pi 4 (YOLOv8 ONNX + MobileNetV2 TFLite + Câmera CSI + Telegram)
-```bash
-python3 telegram_RP.py
-```
-
-### Execução em Ambiente de Bancada / PC (Webcam + Alertas via Telegram)
-```bash
-python3 telegram.py
-```
-
-> Pressione a tecla **`q`** na janela de visualização para encerrar a sessão de monitoramento (o sistema enviará automaticamente a notificação de encerramento ao Telegram e salvará o resumo estatístico em CSV).
-
----
-
 ## 👩‍💻 Autoria e Orientação
 
 - **Autora:** Ingrid Mara Xavier
