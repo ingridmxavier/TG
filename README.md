@@ -48,6 +48,23 @@ flowchart LR
 ```
 
 ---
+## 💻 Tecnologias e Bibliotecas Utilizadas
+
+Todo o código-fonte do sistema foi desenvolvido em linguagem **Python** (`Python 3.10+` / `Python 3.13`), integrando as seguintes bibliotecas e motores de inferência:
+
+| Biblioteca / Ferramenta | Onde e Como Foi Utilizada no Projeto |
+|:---|:---|
+| **`Python 3`** | Linguagem principal de desenvolvimento de todos os módulos de captura, pré-processamento, inferência em cascata, máquina de estados temporal e geração de relatórios. |
+| **`OpenCV` (`cv2`)** | Captura de vídeo/webcam (`VideoCapture`), redimensionamento por interpolação bilinear (`resize` para `640×640` e `256×256`), conversão do espaço de cores (`cvtColor` de `BGR` para `RGB`), desenho do painel visual/HUD (`rectangle`, `putText`) e compressão do quadro de evidência em JPEG diretamente na memória RAM (`imencode`). |
+| **`ONNX Runtime` (`onnxruntime`)** | Motor de inferência leve em C++ utilizado na versão embarcada (**Raspberry Pi 4**) para executar o detector de 1º estágio (**YOLOv8n** exportado para `.onnx`) na CPU (`CPUExecutionProvider`), eliminando a dependência do PyTorch. |
+| **`LiteRT / TensorFlow Lite` (`ai_edge_litert` / `tflite_runtime`)** | Interpretador leve utilizado no 2º estágio para executar o classificador **MobileNetV2** convertido para grafo estático `.tflite` (`float32`), acelerando a inferência em ~6× na CPU sem perda de precisão. |
+| **`Picamera2` (`picamera2`)** | Biblioteca oficial baseada na pilha `libcamera` do Linux, utilizada no **Raspberry Pi 4** para controlar e capturar quadros diretamente do sensor óptico **OV5647** pelo barramento dedicado **MIPI CSI** na resolução nativa de `640×480` pixels. |
+| **`Ultralytics` (`ultralytics`)** | Utilizada na versão de bancada (**PC**) para carregar os pesos do detector **YOLOv8n** (`yolov8n.pt`) e para exportar o modelo para o padrão aberto **ONNX**. |
+| **`TensorFlow / Keras` (`tensorflow.keras`)** | Utilizado no treinamento supervisionado, no ajuste fino (*fine-tuning* de domínio), na função de normalização `preprocess_input` e nos testes comparativos entre `.keras` e `.tflite` no computador. |
+| **`NumPy` (`numpy`)** | Manipulação matricial de alta performance sobre os tensores de imagem: conversão para `float32`, normalização radiométrica (`[0, 1]` e `[-1, 1]`), transposição de canais (`HWC` → `CHW` para o ONNX), adição de dimensão de *batch* (`expand_dims`), busca da classe vencedora (`argmax`) e cálculo estatístico de latência (média, variância, desvio padrão). |
+| **`Pandas` (`pandas`)** | Estruturação dos registros de telemetria em *DataFrames* e exportação automática dos dois relatórios finais em CSV: log detalhado quadro a quadro (`resultados_yolo_mob.csv`) e resumo consolidado da sessão (`resumo_yolo_mob.csv`). |
+| **`Requests` (`requests`)** | Cliente HTTP utilizado para comunicação com a **API REST do Telegram**, enviando notificações de texto (`sendMessage`) e fotos da infração em *buffer* de memória (`sendPhoto`) via requisições `POST` com controle de *timeout*. |
+| **`Collections` (`deque`), `Time`, `OS` e `Argparse`** | Módulos nativos do Python utilizados para: janela deslizante de média móvel das predições (`deque`), cronometragem de alta precisão (`perf_counter`) e controle de persistência/cooldown (`time`), leitura segura de credenciais em variáveis de ambiente (`os.environ`) e leitura de parâmetros de linha de comando (`argparse`: `--video`, `--keras`). |
 
 ## 📊 Principais Resultados Experimentais
 
