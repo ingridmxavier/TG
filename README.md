@@ -104,36 +104,6 @@ Avaliação sobre **908 imagens reais anotadas manualmente** (`ImgWC` com 457 qu
 
 ---
 
-## 🚀 Instalação e Configuração
-
-### 1. Clonar o repositório
-```bash
-git clone https://github.com/SEU-USUARIO/drivesafe-vision.git
-cd drivesafe-vision
-```
-
-### 2. Instalar as dependências
-No **Computador (PC / Notebook)**:
-```bash
-pip install opencv-python numpy onnxruntime tensorflow requests ultralytics
-```
-
-No **Raspberry Pi 4 (Raspberry Pi OS Bookworm)**:
-```bash
-sudo apt update && sudo apt install -y python3-picamera2 python3-opencv
-pip install numpy onnxruntime ai-edge-litert requests
-```
-
-### 3. Configurar as variáveis de ambiente do Telegram
-Crie um bot pelo [@BotFather](https://t.me/BotFather) no Telegram e exporte seu token e o ID do chat corporativo no terminal (ou no `~/.bashrc`):
-
-```bash
-export TELEGRAM_TOKEN="SEU_TOKEN_DO_BOT_AQUI"
-export TELEGRAM_CHAT_ID="SEU_CHAT_ID_AQUI"
-```
-
----
-
 ## ▶️ Como Executar
 
 ### Execução Embarcada no Raspberry Pi 4 (YOLOv8 ONNX + MobileNetV2 TFLite + Câmera CSI + Telegram)
