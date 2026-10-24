@@ -1,4 +1,4 @@
-# 🚗📱 DriveSafe Vision — Detecção Embarcada de Uso de Celular na Direção Veicular
+# 🚗📱 DriveSafe Vision — Detecção de Uso de Celular na Direção Veicular
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)
 ![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-green?logo=opencv&logoColor=white)
