@@ -9,7 +9,7 @@
 
 O **DriveSafe Vision** é um sistema embarcado de Visão Computacional e Aprendizado Profundo (*Edge AI*) projetado para detectar, automaticamente e em tempo real, o uso indevido de telefone celular por motoristas durante a condução veicular.
 
-Desenvolvido como Trabalho de Graduação em **Engenharia de Informação** na **Universidade Federal do ABC (UFABC)**, o sistema opera de forma autônoma em um microcomputador **Raspberry Pi 4 Model B** integrado a sensores ópticos (Webcam USB de laboratório **Logitech Brio 100** via V4L2/OpenCV e câmera dedicada **OV5647 via MIPI CSI**), utilizando uma arquitetura híbrida em dois estágios (**YOLOv8n + MobileNetV2**) com envio de alertas fotográficos instantâneos para a gestão de frota via **API do Telegram**, sem necessidade de gravação contínua de vídeo.
+Desenvolvido como Trabalho de Graduação em **Engenharia de Informação** na **Universidade Federal do ABC (UFABC)**, o sistema opera de forma autônoma em um microcomputador **Raspberry Pi 4 Model B** integrado à webcam de laboratório **Logitech Brio 100** (Full HD 1080p, conexão USB-A via protocolo V4L2/OpenCV), utilizando uma arquitetura híbrida em dois estágios (**YOLOv8n + MobileNetV2**) com envio de alertas fotográficos instantâneos para a gestão de frota via **API do Telegram**, sem necessidade de gravação contínua de vídeo.
 
 ---
 
@@ -20,10 +20,9 @@ Todo o código-fonte do sistema foi desenvolvido em linguagem **Python** (`Pytho
 | Biblioteca / Ferramenta | Onde e Como Foi Utilizada no Projeto |
 |:---|:---|
 | **`Python 3`** | Linguagem principal de desenvolvimento de todos os módulos de captura, pré-processamento, inferência em cascata, máquina de estados temporal e geração de relatórios. |
-| **`OpenCV` (`cv2`)** | Captura de vídeo e webcam USB via V4L2 (`VideoCapture`), redimensionamento por interpolação bilinear (`resize` para `640×640` e `256×256`), conversão do espaço de cores (`cvtColor` de `BGR` para `RGB`), desenho do painel visual/HUD (`rectangle`, `putText`) e compressão do quadro de evidência em JPEG diretamente na memória RAM (`imencode`). |
+| **`OpenCV` (`cv2`)** | Captura de vídeo diretamente da webcam USB de laboratório (**Logitech Brio 100**) via V4L2 (`VideoCapture`), redimensionamento por interpolação bilinear (`resize` para `640×640` e `256×256`), conversão do espaço de cores (`cvtColor` de `BGR` para `RGB`), desenho do painel visual/HUD (`rectangle`, `putText`) e compressão do quadro de evidência em JPEG diretamente na memória RAM (`imencode`). |
 | **`ONNX Runtime` (`onnxruntime`)** | Motor de inferência leve em C++ utilizado na versão embarcada (**Raspberry Pi 4**) para executar o detector de 1º estágio (**YOLOv8n** exportado para `.onnx`) na CPU (`CPUExecutionProvider`), eliminando a dependência do PyTorch. |
 | **`LiteRT / TensorFlow Lite` (`ai_edge_litert` / `tflite_runtime`)** | Interpretador leve utilizado no 2º estágio para executar o classificador **MobileNetV2** convertido para grafo estático `.tflite` (`float32`), acelerando a inferência em ~6× na CPU do Raspberry Pi sem perda de precisão. |
-| **`V4L2 / Picamera2`** | Suporte óptico híbrido: captura via protocolo universal **V4L2 / OpenCV** para a webcam USB de laboratório (**Logitech Brio 100**) e biblioteca oficial **Picamera2** para controle do sensor **OmniVision OV5647 (MIPI CSI)** na resolução nativa de `640×480` pixels. |
 | **`Ultralytics` (`ultralytics`)** | Utilizada na versão de bancada (**PC**) para carregar os pesos do detector **YOLOv8n** (`yolov8n.pt`) e para exportar o modelo para o padrão aberto **ONNX**. |
 | **`TensorFlow / Keras` (`tensorflow.keras`)** | Utilizado no treinamento supervisionado, no ajuste fino (*fine-tuning* de domínio), na função de normalização `preprocess_input` e nos testes comparativos entre `.keras` e `.tflite` no computador. |
 | **`NumPy` (`numpy`)** | Manipulação matricial de alta performance sobre os tensores de imagem: conversão para `float32`, normalização radiométrica (`[0, 1]` e `[-1, 1]`), transposição de canais (`HWC` $\to$ `CHW` para o ONNX), adição de dimensão de *batch* (`expand_dims`), busca da classe vencedora (`argmax`) e cálculo estatístico de latência (média, variância, desvio padrão). |
@@ -42,7 +41,7 @@ Todo o código-fonte do sistema foi desenvolvido em linguagem **Python** (`Pytho
   - Conversão do classificador para grafo estático **TensorFlow Lite (`float32`)**, proporcionando ganho de velocidade de **~6× em CPU** (de 15,76 FPS para 93,08 FPS em computador) sem qualquer perda de exatidão numérica (`divergência = 0,0000`).
   - Execução do detector de objetos via **ONNX Runtime**, eliminando a sobrecarga de memória dos frameworks de treinamento (PyTorch/TensorFlow) no Raspberry Pi 4.
 - **Processamento Digital de Imagens com OpenCV:**
-  - Captura padronizada em $640 \times 480$ pixels (compatível com a webcam USB **Logitech Brio 100** e modo físico nativo *RAW Bayer* de 10 bits do sensor OV5647);
+  - Captura padronizada em $640 \times 480$ pixels diretamente da webcam USB de laboratório **Logitech Brio 100** via driver Linux V4L2;
   - Correção cromática ($\text{BGR} \to \text{RGB}$), reamostragem por interpolação bilinear ($640 \times 640$ e $256 \times 256$) e normalização radiométrica ($[0, 1]$ e $[-1, 1]$);
   - Renderização de barra de status dinâmica, caixas delimitadoras e cronômetro de infração em alta visibilidade.
 - **Máquina de Estados Temporal e Alertas via Telegram:**
@@ -57,7 +56,7 @@ Todo o código-fonte do sistema foi desenvolvido em linguagem **Python** (`Pytho
 
 ```mermaid
 flowchart LR
-    A["Webcam USB / Sensor CSI\n(640x480 px)"] --> B["Pré-processamento OpenCV\n(BGR->RGB, Resize, Norm.)"]
+    A["Webcam USB (Logitech Brio 100)\n(640x480 px)"] --> B["Pré-processamento OpenCV\n(BGR->RGB, Resize, Norm.)"]
     B --> C{"1º Estágio: YOLOv8n\n(ONNX Runtime)\nCelular detectado?"}
     C -- Não --> D["Status: SEM CELULAR\n(Condução Segura)"]
     C -- Sim --> E{"2º Estágio: MobileNetV2\n(TFLite float32)\nProbabilidade > 0.05?"}
@@ -94,30 +93,32 @@ Todas as oito arquiteturas foram treinadas/ajustadas por até 80 épocas sobre o
 | Taxa de quadros (FPS) | 15,76 FPS | **93,08 FPS** | **5,9× maior vazão** |
 | Divergência numérica | Referência | **0,0000** | **Zero perda de precisão** |
 
-### 3. Validação Cruzada entre Sensores Ópticos (Webcam Logitech Brio 100 vs. Câmera CSI Raspberry Pi)
-Avaliação sobre **908 imagens reais anotadas manualmente** (`ImgWC` com 457 quadros capturados com a webcam **Logitech Brio 100** e `ImgRP` com 451 quadros do módulo de câmera CSI OV5647):
+### 3. Validação nos Conjuntos Autorais (`ImgWC` e `ImgRP`)
+Avaliação sobre **908 imagens reais anotadas manualmente** (457 quadros capturados com a webcam de laboratório **Logitech Brio 100** e 451 quadros do ensaio embarcado):
 
 | Conjunto + Formato | Total | VP | VN | FP | FN | Acurácia (%) | Precisão (%) | Recall (%) |
 |:---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | `ImgWC` (Webcam Logitech Brio 100) + Keras / TFLite | 457 | 298 | 138 | **0** | 21 | **95,40%** | **100,00%** | 93,42% |
-| `ImgRP` (Raspberry Pi CSI OV5647) + Keras / TFLite | 451 | 91 | 350 | **0** | 10 | **97,78%** | **100,00%** | 90,10% |
+| `ImgRP` (Ensaio Embarcado) + Keras / TFLite | 451 | 91 | 350 | **0** | 10 | **97,78%** | **100,00%** | 90,10% |
 
 ---
 
 ## 🛠️ Hardware Utilizado no Projeto
 
-- **Microcomputador Embarcado:** Raspberry Pi 4 Model B (SoC Broadcom BCM2711, CPU Quad-Core ARM Cortex-A72 @ 1,5–1,8 GHz, 4 GB RAM LPDDR4)
+- **Microcomputador Embarcado:** Raspberry Pi 4 Model B (SoC Broadcom BCM2711, CPU Quad-Core ARM Cortex-A72 @ 1,5 GHz, 4 GB RAM LPDDR4)
 - **Sistema Operacional:** Raspberry Pi OS 64-bit (Debian 12 *Bookworm*)
-- **Dispositivos Ópticos de Captura:**
-  - **Webcam de Laboratório:** **Logitech Brio 100** (Full HD 1080p / HD 720p @ 30 FPS, tecnologia RightLight 2, dFOV $58^\circ$, interface USB-A operando via driver Linux V4L2);
-  - **Câmera CSI Dedicada:** Módulo Câmera 5 MP — Sensor CMOS OmniVision OV5647 ($f/1,8$, $3,6\text{ mm}$, barramento MIPI CSI).
+- **Câmera Utilizada:** Webcam USB de laboratório **Logitech Brio 100**
+  - **Fabricante:** Logitech
+  - **Resolução:** Full HD 1080p / HD 720p @ 30 FPS
+  - **Recursos Ópticos:** Tecnologia RightLight 2 (balanço automático de iluminação), campo de visão diagonal (dFOV) de $58^\circ$
+  - **Interface:** Conexão USB-A operando via driver padrão Linux Video4Linux2 (V4L2)
 - **Armazenamento:** Cartão microSD de 32 GB Classe 10 UHS-I
 
 
 ## 📁 Estrutura dos Scripts do Repositório
 
 - **[`telegram_RP_explicado.py`](telegram_RP_explicado.py):** Código completo e didaticamente comentado para execução em tempo real no **Raspberry Pi 4** com Webcam USB (V4L2), ONNX Runtime, Google AI Edge LiteRT e alertas via Telegram.
-- **[`telegram_RP.py`](telegram_RP.py):** Versão enxuta do código embarcado para produção no Raspberry Pi 4.
+- **[`telegram_RP.py`](telegram_RP.py):** Versão enxuta do código embarcado para produção no Raspberry Pi 4 com Webcam USB.
 - **[`yolo_mob_telegram_explicado.py`](yolo_mob_telegram_explicado.py):** Código completo e comentado para execução em ambiente de bancada (**PC / Notebook**), permitindo alternar entre `.keras` e `.tflite` e testar vídeos gravados ou webcam local.
 - **[`yolo_mob_telegram.py`](yolo_mob_telegram.py):** Versão enxuta do script para bancada/desktop.
 
