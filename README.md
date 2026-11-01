@@ -113,40 +113,6 @@ Avaliação sobre **908 imagens reais anotadas manualmente** (`ImgWC` com 457 qu
   - **Câmera CSI Dedicada:** Módulo Câmera 5 MP — Sensor CMOS OmniVision OV5647 ($f/1,8$, $3,6\text{ mm}$, barramento MIPI CSI).
 - **Armazenamento:** Cartão microSD de 32 GB Classe 10 UHS-I
 
----
-
-## ▶️ Exemplos de Uso
-
-### 1. Configurar as credenciais do Telegram
-```bash
-export TELEGRAM_BOT_TOKEN="SEU_TOKEN_DO_BOT_AQUI"
-export TELEGRAM_CHAT_ID="SEU_CHAT_ID_AQUI"
-```
-
-### 2. Executar no Raspberry Pi 4 com Webcam USB (YOLOv8 ONNX + MobileNetV2 TFLite)
-```bash
-# Executa usando o script detalhadamente comentado (webcam padrão /dev/video0):
-python3 telegram_RP_explicado.py
-
-# Caso a webcam USB esteja em outro índice (ex: /dev/video1):
-CAM_INDEX=1 python3 telegram_RP_explicado.py
-```
-
-### 3. Executar no Computador / Notebook (Webcam ou Arquivo de Vídeo)
-```bash
-# Webcam padrão (0) usando MobileNetV2 TFLite:
-python3 yolo_mob_telegram_explicado.py
-
-# Webcam padrão (0) usando MobileNetV2 Keras:
-python3 yolo_mob_telegram_explicado.py --keras
-
-# Arquivo de vídeo gravado (.mp4) usando TFLite:
-python3 yolo_mob_telegram_explicado.py --video caminho/do/video.mp4
-```
-
-> **Dica de Encerramento:** Pressione a tecla **`q`** na janela de visualização para encerrar a sessão com segurança (o sistema enviará a notificação de encerramento ao Telegram e salvará os relatórios `resultados_yolo_mob.csv` e `resumo_yolo_mob.csv`).
-
----
 
 ## 📁 Estrutura dos Scripts do Repositório
 
